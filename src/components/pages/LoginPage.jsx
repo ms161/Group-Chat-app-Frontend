@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../navbar/NavBar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function LoginPage() {
-
+const navigate=useNavigate()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -21,7 +21,11 @@ function LoginPage() {
         try {
 
             e.preventDefault()
-            const res = await axios.post('http://localhost:5000/user/sign-up', formData)
+            const res = await axios.post('http://localhost:5000/user/login', formData)
+            console.log(res.status)
+            if(res.status===201){
+                navigate('/chat')
+            }
         }
         catch (err) {
             // console.log(err.response.data.message)
@@ -60,7 +64,7 @@ function LoginPage() {
                     onChange={handleChange}
                 />
                 {err && <p className='text-center bg-red-600 w-96 m-auto text-white p-2 rounded-md'>{err}</p>}
-                <button className='bg-green-500 w-20 m-auto rounded-md p-3 text-white' type='submit'>Sign Up</button>
+                <button className='bg-green-500 w-20 m-auto rounded-md p-3 text-white' type='submit'>Login</button>
               
 
 
