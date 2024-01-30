@@ -17,12 +17,13 @@ const navigate=useNavigate()
         });
     };
 
-    const handleSignupPage = async (e) => {
+    const handleLoginPage = async (e) => {
         try {
 
             e.preventDefault()
             const res = await axios.post('http://localhost:5000/user/login', formData)
-            console.log(res.status)
+            console.log(res.data.token)
+            localStorage.setItem('token',res.data.token)
             if(res.status===201){
                 navigate('/chat')
             }
@@ -46,7 +47,7 @@ const navigate=useNavigate()
         <>
         
 
-            <form onSubmit={handleSignupPage} className="flex flex-col m-auto justify-center gap-y-9 mt-10 " action="">
+            <form onSubmit={handleLoginPage} className="flex flex-col m-auto justify-center gap-y-9 mt-10 " action="">
                 <input
                     className="border-b border-black w-96 p-3 m-auto"
                     type="email"
